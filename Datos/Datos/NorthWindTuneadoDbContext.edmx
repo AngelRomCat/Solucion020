@@ -1,0 +1,554 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="NorthWindTuneadoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="ntext" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ContactName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="60" />
+          <Property Name="City" Type="nvarchar" MaxLength="15" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="15" />
+          <Property Name="Country" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="DetallePedido">
+          <Key>
+            <PropertyRef Name="OrderDetailID" />
+          </Key>
+          <Property Name="OrderDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="birthDate" Type="datetime" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Notes" Type="ntext" />
+        </EntityType>
+        <EntityType Name="Naviera">
+          <Key>
+            <PropertyRef Name="shipperID" />
+          </Key>
+          <Property Name="shipperID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="shipperName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="EmployeeID" Type="int" />
+          <Property Name="OrderDate" Type="datetime" />
+          <Property Name="shipperID" Type="int" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="supplierID" Type="int" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="unit" Type="nvarchar" MaxLength="50" />
+          <Property Name="Price" Type="money" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="supplierID" />
+          </Key>
+          <Property Name="supplierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="supplierName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ContactName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="60" />
+          <Property Name="City" Type="nvarchar" MaxLength="15" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="15" />
+          <Property Name="Country" Type="nvarchar" MaxLength="15" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="24" />
+        </EntityType>
+        <Association Name="FK_Order_Details_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="DetallePedido">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Details_Producto">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="DetallePedido">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Empleado">
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="0..1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Naviera">
+          <End Role="Naviera" Type="Self.Naviera" Multiplicity="0..1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Naviera">
+              <PropertyRef Name="shipperID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="shipperID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Categoria">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Proveedor">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="supplierID" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="supplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NorthWindTuneadoModelStoreContainer">
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetallePedido" EntityType="Self.DetallePedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empleado" EntityType="Self.Empleado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Naviera" EntityType="Self.Naviera" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Order_Details_Pedido" Association="Self.FK_Order_Details_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="DetallePedido" EntitySet="DetallePedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Details_Producto" Association="Self.FK_Order_Details_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="DetallePedido" EntitySet="DetallePedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Cliente" Association="Self.FK_Pedido_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Empleado" Association="Self.FK_Pedido_Empleado">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Naviera" Association="Self.FK_Pedido_Naviera">
+            <End Role="Naviera" EntitySet="Naviera" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Categoria" Association="Self.FK_Producto_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Proveedor" Association="Self.FK_Producto_Proveedor">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NorthWindTuneadoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Categoria" FromRole="Categoria" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContactName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK_Pedido_Cliente" FromRole="Cliente" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="DetallePedido">
+          <Key>
+            <PropertyRef Name="OrderDetailID" />
+          </Key>
+          <Property Name="OrderDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK_Order_Details_Pedido" FromRole="DetallePedido" ToRole="Pedido" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK_Order_Details_Producto" FromRole="DetallePedido" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="birthDate" Type="DateTime" Precision="3" />
+          <Property Name="Photo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK_Pedido_Empleado" FromRole="Empleado" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="Naviera">
+          <Key>
+            <PropertyRef Name="shipperID" />
+          </Key>
+          <Property Name="shipperID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="shipperName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK_Pedido_Naviera" FromRole="Naviera" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="EmployeeID" Type="Int32" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="shipperID" Type="Int32" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Pedido_Cliente" FromRole="Pedido" ToRole="Cliente" />
+          <NavigationProperty Name="DetallePedido" Relationship="Self.FK_Order_Details_Pedido" FromRole="Pedido" ToRole="DetallePedido" />
+          <NavigationProperty Name="Empleado" Relationship="Self.FK_Pedido_Empleado" FromRole="Pedido" ToRole="Empleado" />
+          <NavigationProperty Name="Naviera" Relationship="Self.FK_Pedido_Naviera" FromRole="Pedido" ToRole="Naviera" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="supplierID" Type="Int32" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Categoria" Relationship="Self.FK_Producto_Categoria" FromRole="Producto" ToRole="Categoria" />
+          <NavigationProperty Name="DetallePedido" Relationship="Self.FK_Order_Details_Producto" FromRole="Producto" ToRole="DetallePedido" />
+          <NavigationProperty Name="Proveedor" Relationship="Self.FK_Producto_Proveedor" FromRole="Producto" ToRole="Proveedor" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="supplierID" />
+          </Key>
+          <Property Name="supplierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="supplierName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContactName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="24" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Proveedor" FromRole="Proveedor" ToRole="Producto" />
+        </EntityType>
+        <Association Name="FK_Producto_Categoria">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Details_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="DetallePedido">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Details_Producto">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="DetallePedido">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Empleado">
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="0..1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Naviera">
+          <End Role="Naviera" Type="Self.Naviera" Multiplicity="0..1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Naviera">
+              <PropertyRef Name="shipperID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="shipperID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Proveedor">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="supplierID" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="supplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NorthWindTuneadoDbContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="DetallePedido" EntityType="Self.DetallePedido" />
+          <EntitySet Name="Empleado" EntityType="Self.Empleado" />
+          <EntitySet Name="Naviera" EntityType="Self.Naviera" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
+          <AssociationSet Name="FK_Producto_Categoria" Association="Self.FK_Producto_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Cliente" Association="Self.FK_Pedido_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Details_Pedido" Association="Self.FK_Order_Details_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="DetallePedido" EntitySet="DetallePedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Details_Producto" Association="Self.FK_Order_Details_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="DetallePedido" EntitySet="DetallePedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Empleado" Association="Self.FK_Pedido_Empleado">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Naviera" Association="Self.FK_Pedido_Naviera">
+            <End Role="Naviera" EntitySet="Naviera" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Proveedor" Association="Self.FK_Producto_Proveedor">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NorthWindTuneadoModelStoreContainer" CdmEntityContainer="NorthWindTuneadoDbContext">
+          <EntitySetMapping Name="Categoria">
+            <EntityTypeMapping TypeName="NorthWindTuneadoModel.Categoria">
+              <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="NorthWindTuneadoModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetallePedido">
+            <EntityTypeMapping TypeName="NorthWindTuneadoModel.DetallePedido">
+              <MappingFragment StoreEntitySet="DetallePedido">
+                <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empleado">
+            <EntityTypeMapping TypeName="NorthWindTuneadoModel.Empleado">
+              <MappingFragment StoreEntitySet="Empleado">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="birthDate" ColumnName="birthDate" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Naviera">
+            <EntityTypeMapping TypeName="NorthWindTuneadoModel.Naviera">
+              <MappingFragment StoreEntitySet="Naviera">
+                <ScalarProperty Name="shipperID" ColumnName="shipperID" />
+                <ScalarProperty Name="shipperName" ColumnName="shipperName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pedido">
+            <EntityTypeMapping TypeName="NorthWindTuneadoModel.Pedido">
+              <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="shipperID" ColumnName="shipperID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="NorthWindTuneadoModel.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedor">
+            <EntityTypeMapping TypeName="NorthWindTuneadoModel.Proveedor">
+              <MappingFragment StoreEntitySet="Proveedor">
+                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
+                <ScalarProperty Name="supplierName" ColumnName="supplierName" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

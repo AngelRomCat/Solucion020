@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="563085260eee430bbd6c93ff41916b85" Name="Diagram1">
+        <EntityTypeShape EntityType="NorthWindTuneadoModel.Categoria" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NorthWindTuneadoModel.Cliente" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="NorthWindTuneadoModel.DetallePedido" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NorthWindTuneadoModel.Empleado" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NorthWindTuneadoModel.Naviera" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NorthWindTuneadoModel.Pedido" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="NorthWindTuneadoModel.Producto" Width="1.5" PointX="3" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NorthWindTuneadoModel.Proveedor" Width="1.5" PointX="0.75" PointY="14.375" IsExpanded="true" />
+        <AssociationConnector Association="NorthWindTuneadoModel.FK_Producto_Categoria" ManuallyRouted="false" />
+        <AssociationConnector Association="NorthWindTuneadoModel.FK_Pedido_Cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="NorthWindTuneadoModel.FK_Order_Details_Pedido" ManuallyRouted="false" />
+        <AssociationConnector Association="NorthWindTuneadoModel.FK_Order_Details_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="NorthWindTuneadoModel.FK_Pedido_Empleado" ManuallyRouted="false" />
+        <AssociationConnector Association="NorthWindTuneadoModel.FK_Pedido_Naviera" ManuallyRouted="false" />
+        <AssociationConnector Association="NorthWindTuneadoModel.FK_Producto_Proveedor" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
