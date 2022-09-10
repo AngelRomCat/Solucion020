@@ -139,6 +139,29 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\about\1.jpg" />
+    <Content Include="Content\Images\about\2.jpg" />
+    <Content Include="Content\Images\about\3.jpg" />
+    <Content Include="Content\Images\about\4.jpg" />
+    <Content Include="Content\Images\close-icon.svg" />
+    <Content Include="Content\Images\favicon.ico" />
+    <Content Include="Content\Images\header-bg.jpg" />
+    <Content Include="Content\Images\logos\facebook.svg" />
+    <Content Include="Content\Images\logos\google.svg" />
+    <Content Include="Content\Images\logos\ibm.svg" />
+    <Content Include="Content\Images\logos\microsoft.svg" />
+    <Content Include="Content\Images\map-image.png" />
+    <Content Include="Content\Images\navbar-logo.svg" />
+    <Content Include="Content\Images\portfolio\1.jpg" />
+    <Content Include="Content\Images\portfolio\2.jpg" />
+    <Content Include="Content\Images\portfolio\3.jpg" />
+    <Content Include="Content\Images\portfolio\4.jpg" />
+    <Content Include="Content\Images\portfolio\5.jpg" />
+    <Content Include="Content\Images\portfolio\6.jpg" />
+    <Content Include="Content\Images\team\1.jpg" />
+    <Content Include="Content\Images\team\2.jpg" />
+    <Content Include="Content\Images\team\3.jpg" />
+    <Content Include="Content\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -156,6 +179,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\scripts.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
