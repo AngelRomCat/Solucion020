@@ -15,15 +15,46 @@ namespace Principal.Controllers
         private NorthWindTuneadoDbContext db = new NorthWindTuneadoDbContext();
 
         // GET: Producto
-        public ActionResult Index(int? id)
+        public ActionResult Index(int? id, bool? categoria)
         {
             var productos = db.Producto.Include(p => p.Categoria).Include(p => p.Proveedor);
+            //Si el método Index recibe un parámetro id != null y > 0
             if (id != null && id > 0)
             {
-                productos = productos.Where(x=>x.CategoryID == id);
-            }
+                if (categoria != null)
+                {
+                    if (categoria == true)
+                    {
+                        productos = productos.Where(x => x.CategoryID == id);
+                        ViewBag.Message = "Productos de la Categoría: " + productos.FirstOrDefault().Categoria.CategoryName;
+                    }
+                    else
+                    {
+                        productos = productos.Where(x => x.supplierID == id);
+                        ViewBag.Message = "Productos del Proveedor: " + productos.FirstOrDefault().Proveedor.supplierName
+                                            + "con domicilio en: " + productos.FirstOrDefault().Proveedor.Address + " "
+                                            + productos.FirstOrDefault().Proveedor.City + " "
+                                            + productos.FirstOrDefault().Proveedor.PostalCode + " "
+                                            + productos.FirstOrDefault().Proveedor.Country + " ";
+                    }
+                }
+            }                       
             return View(productos.ToList());
         }
+
+        //// GET: Producto
+        //public ActionResult Index(int? id)
+        //{
+        //    var productos = db.Producto.Include(p => p.Categoria).Include(p => p.Proveedor);
+        //    //Si el método Index recibe un parámetro id != null y > 0
+        //    if (id != null && id > 0)
+        //    {//Entonces, filtramos y obtenemos solamente los productos de una categoría con 
+        //     //CategoryID == id
+        //        productos = productos.Where(x => x.CategoryID == id);
+        //        ViewBag.Message = productos.FirstOrDefault().Categoria.CategoryName;
+        //    }
+        //    return View(productos.ToList());
+        //}
 
         // GET: Producto/Details/5
         public ActionResult Details(int? id)

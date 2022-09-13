@@ -32,7 +32,7 @@
             @Html.ActionLink("Edit", "Edit", new { id = item.CategoryID }) |
             @Html.ActionLink("Details", "Details", new { id = item.CategoryID }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.CategoryID }) |
-            @Html.ActionLink("Productos de esta Categoría", "index", "../../Producto", new { id = item.CategoryID })
+            @Html.ActionLink("Productos de esta Categoría", "Index", "Producto", new { id = item.CategoryID , categoria = true}, null)
         </td>
     </tr>
 }

@@ -2,9 +2,15 @@
 
 @{
     ViewBag.Title = "Index";
+    string muestraMadre = "";
+    if (ViewBag.Message != "")
+    {
+        muestraMadre = ViewBag.Message;
+    }
 }
 
 <h2>Index</h2>
+<h3>@muestraMadre</h3>
 
 <p>
     @Html.ActionLink("Create New", "Create")
