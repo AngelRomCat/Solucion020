@@ -26,16 +26,22 @@ namespace Principal.Controllers
                     if (categoria == true)
                     {
                         productos = productos.Where(x => x.CategoryID == id);
-                        ViewBag.Message = "Productos de la Categoría: " + productos.FirstOrDefault().Categoria.CategoryName;
+                        if (productos != null && productos.Count()>0)
+                        {
+                            ViewBag.Message = "Productos de la Categoría: " + productos.FirstOrDefault().Categoria.CategoryName;
+                        }
                     }
                     else
                     {
                         productos = productos.Where(x => x.supplierID == id);
-                        ViewBag.Message = "Productos del Proveedor: " + productos.FirstOrDefault().Proveedor.supplierName
+                        if (productos != null && productos.Count() > 0)
+                        {
+                            ViewBag.Message = "Productos del Proveedor: " + productos.FirstOrDefault().Proveedor.supplierName
                                             + "con domicilio en: " + productos.FirstOrDefault().Proveedor.Address + " "
                                             + productos.FirstOrDefault().Proveedor.City + " "
                                             + productos.FirstOrDefault().Proveedor.PostalCode + " "
                                             + productos.FirstOrDefault().Proveedor.Country + " ";
+                        }
                     }
                 }
             }                       
