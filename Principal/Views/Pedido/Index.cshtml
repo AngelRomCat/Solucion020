@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Datos.Datos.Pedido>
+
+@{
+    ViewBag.Title = "Index";
+    string madre = "";
+    if (ViewBag.Message != null && ViewBag.Message != "")
+    {
+        madre = ViewBag.Message;
+    }
+}
+
+<h2>Index</h2>
+<h2>@madre</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cliente.CustomerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Empleado.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Naviera.shipperName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Empleado.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naviera.shipperName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.OrderID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.OrderID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.OrderID })
+            </td>
+        </tr>
+    }
+
+</table>
