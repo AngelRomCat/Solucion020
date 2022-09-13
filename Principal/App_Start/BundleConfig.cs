@@ -14,17 +14,29 @@ namespace Principal
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
-            // Utilice la versión de desarrollo de Modernizr para desarrollar y obtener información sobre los formularios.  De esta manera estará
-            // para la producción, use la herramienta de compilación disponible en https://modernizr.com para seleccionar solo las pruebas que necesite.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+            //// Utilice la versión de desarrollo de Modernizr para desarrollar y obtener información sobre los formularios.  De esta manera estará
+            //// para la producción, use la herramienta de compilación disponible en https://modernizr.com para seleccionar solo las pruebas que necesite.
+            //bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
+            //            "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+            //          "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      //"~/Content/bootstrap.css",
+                      //"~/Content/site.css",
+                      "~/Content/montserrat.css",
+                      "~/Content/roboto.css",
+                      "~/Content/styles.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/fontawesome").Include(
+                      "~/Scripts/fontawesome.js"));
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap.bundle").Include(
+                      "~/Scripts/bootstrap.bundle.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
+                      "~/Scripts/scripts.js"));
+            bundles.Add(new ScriptBundle("~/bundles/sb-forms-latest").Include(
+                      "~/Scripts/sb-forms-latest.js"));
         }
     }
 }
