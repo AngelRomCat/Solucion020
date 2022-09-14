@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Datos.Datos;
+using Principal.ViewModels;
 
 namespace Principal.Controllers
 {
@@ -36,6 +37,35 @@ namespace Principal.Controllers
             }
             
             return View(pedidos.ToList());
+        }
+
+        public ActionResult PedidoDetallePedido(int? id)
+        {
+            PedidoDetallePedidoViewModel model = null;
+            model = new PedidoDetallePedidoViewModel();
+
+            IList<Pedido> pedidos = db.Pedido.Include(p => p.Cliente).Include(p => p.Empleado).Include(p => p.Naviera)
+                .Include(p => p.DetallePedido).ToList();
+
+            if (id != null && id > 0)
+            {
+                Pedido pedido = pedidos.Where(x => x.OrderID == id).FirstOrDefault();
+                //Ahora, vamos a pasar todo el contenido de un Objeto Pedido al ViewModel PedidoDetallePedidoViewModel
+                model.OrderID = pedido.OrderID;
+                model.CustomerID = pedido.CustomerID;
+                model.EmployeeID = pedido.EmployeeID;
+                model.OrderDate = pedido.OrderDate;
+                model.shipperID = pedido.shipperID;
+                model.Empleado = pedido.Empleado;
+                model.Cliente = pedido.Cliente;
+                model.Naviera = pedido.Naviera;
+
+                IList<DetallePedido> detallePedidos = null;
+                detallePedidos = pedido.DetallePedido.ToList();
+                //AHORA model ES A EFECTOS PRÁCTICOS ES pedido
+            }
+
+            return View(model);
         }
 
         // GET: Pedido/Details/5
