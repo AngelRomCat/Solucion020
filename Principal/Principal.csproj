@@ -139,6 +139,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\EmpleadoPedidoViewModel.cs" />
     <Compile Include="ViewModels\PedidoDetallePedidoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +239,7 @@
     <Content Include="Views\DetallePedido\Edit.cshtml" />
     <Content Include="Views\DetallePedido\Index.cshtml" />
     <Content Include="Views\Pedido\PedidoDetallePedido.cshtml" />
+    <Content Include="Views\Empleado\EmpleadoPedido.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Datos.Datos;
+using Principal.ViewModels;
 
 namespace Principal.Controllers
 {
@@ -18,6 +19,34 @@ namespace Principal.Controllers
         public ActionResult Index()
         {
             return View(db.Empleado.ToList());
+        }
+
+        //ViewModel:
+        public ActionResult EmpleadoPedido(int? id)
+        {
+            EmpleadoPedidoViewModel model = null;
+            model = new EmpleadoPedidoViewModel();
+
+            IList<Empleado> empleados = db.Empleado
+                .Include(p => p.Pedido)
+                .Include(p => p.Pedido.Select(d => d.Cliente))
+                .Include(p => p.Pedido.Select(d => d.Naviera))
+                .ToList();
+
+            if (id!= null && id > 0)
+            {
+                Empleado empleado = empleados.Where(x => x.EmployeeID == id).FirstOrDefault();
+                model.EmployeeID = empleado.EmployeeID;
+                model.birthDate = empleado.birthDate;
+                model.FirstName = empleado.FirstName;
+                model.LastName = empleado.LastName;
+                model.Photo = empleado.Photo;
+                model.Notes = empleado.Notes;
+                //IList<pedido> de todoslos pedidos que ha hecho este empleado
+                model.Pedido = empleado.Pedido;
+            }
+
+            return View(model);   
         }
 
         // GET: Empleado/Details/5
