@@ -46,6 +46,44 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+<h2>@Html.DisplayFor(model => model.OrderDate)</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DetallePedido.FirstOrDefault().Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DetallePedido.FirstOrDefault().OrderID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DetallePedido.FirstOrDefault().Producto.ProductName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.DetallePedido)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pedido.OrderID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.ProductName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.OrderDetailID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.OrderDetailID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.OrderDetailID })
+            </td>
+        </tr>
+    }
+
+</table>

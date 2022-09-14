@@ -59,9 +59,8 @@ namespace Principal.Controllers
                 model.Empleado = pedido.Empleado;
                 model.Cliente = pedido.Cliente;
                 model.Naviera = pedido.Naviera;
-
-                IList<DetallePedido> detallePedidos = null;
-                detallePedidos = pedido.DetallePedido.ToList();
+                //Listado de registros de la tabla DetallePedido que pertenecen a este pedido:
+                model.DetallePedido = pedido.DetallePedido;
                 //AHORA model ES A EFECTOS PRÁCTICOS ES pedido
             }
 
